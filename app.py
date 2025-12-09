@@ -69,12 +69,39 @@ def lottery_draw():
         # Получаем хеши блоков и их высоты
         block_hashes, block_heights = get_block_hashes_for_draw(block_height, block_count)
         
+        # Проверяем, не использовались ли эти блоки ранее
+        warnings = []
+        for prev_draw in lottery_history[-10:]:  # Проверяем последние 10 розыгрышей
+            if prev_draw['block_heights'] == block_heights:
+                warnings.append({
+                    'type': 'duplicate_blocks',
+                    'message': f'⚠️ ВНИМАНИЕ: Используются те же блоки, что и в розыгрыше {prev_draw["timestamp"]}. Результат будет идентичным!',
+                    'previous_draw': prev_draw['timestamp'],
+                    'blocks': block_heights
+                })
+                break
+        
         # Проводим розыгрыш
         result = get_lottery_result(block_hashes, tickets, block_heights)
         
+        # Сохраняем в историю
+        lottery_history.append({
+            'timestamp': datetime.now().isoformat(),
+            'block_heights': block_heights,
+            'block_hashes': block_hashes,
+            'seed_hex': result['seed_hex'],
+            'winner': result['winner'],
+            'tickets_count': len(tickets)
+        })
+        
+        # Ограничиваем размер истории (храним последние 100 розыгрышей)
+        if len(lottery_history) > 100:
+            lottery_history.pop(0)
+        
         return jsonify({
             'success': True,
-            'result': result
+            'result': result,
+            'warnings': warnings
         })
     
     except Exception as e:
