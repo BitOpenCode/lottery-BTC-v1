@@ -85,6 +85,11 @@ async function conductDraw() {
     errorEl.classList.add('hidden');
     
     try {
+        // Проверяем, загружена ли клиентская логика
+        if (typeof conductLotteryDraw === 'undefined') {
+            throw new Error('Клиентская логика не загружена. Убедитесь, что файл lottery-client.js подключен.');
+        }
+        
         // Используем клиентскую логику (работает без бэкенда!)
         const result = await conductLotteryDraw(currentTickets, 3);
         

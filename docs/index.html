@@ -249,6 +249,16 @@
     </div>
 
     <script src="static/js/lottery-client.js"></script>
+    <script>
+        // Проверка загрузки клиентской логики
+        window.addEventListener('load', () => {
+            if (typeof conductLotteryDraw === 'undefined') {
+                console.error('Ошибка: lottery-client.js не загружен!');
+            } else {
+                console.log('✅ Клиентская логика загружена');
+            }
+        });
+    </script>
     <script src="static/js/app.js"></script>
 </body>
 </html>
