@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTC Lottery - Честная лотерея на основе Bitcoin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎰 BTC Lottery</h1>
+            <p class="subtitle">Честная лотерея на основе Bitcoin блоков</p>
+        </header>
+
+        <div class="info-section">
+            <h2>Как это работает?</h2>
+            <div class="explanation">
+                <p>Победитель определяется случайным образом на основе хешей блоков Bitcoin. 
+                Каждый билет получает уникальное случайное число (score), вычисленное из seed и номера билета. 
+                Побеждает билет с <strong>минимальным score</strong>.</p>
+                <p>Процесс полностью прозрачен и проверяем - любой может повторить расчёт самостоятельно.</p>
+            </div>
+        </div>
+
+        <div class="tickets-input-section">
+            <h2>🎫 Введите номера билетов</h2>
+            <div class="tickets-input-container">
+                <div class="input-methods">
+                    <div class="method-tabs">
+                        <button class="tab-btn active" data-method="single">По одному</button>
+                        <button class="tab-btn" data-method="bulk">Массовый ввод</button>
+                    </div>
+                    
+                    <div id="singleInputMethod" class="input-method active">
+                        <div class="form-group">
+                            <input type="number" id="singleTicketInput" placeholder="Номер билета" class="form-input">
+                            <button id="addSingleTicketBtn" class="btn btn-success">➕ Добавить</button>
+                        </div>
+                        <div id="singleTicketsList" class="added-tickets-list"></div>
+                    </div>
+                    
+                    <div id="bulkInputMethod" class="input-method">
+                        <textarea id="bulkTicketsInput" placeholder="Введите номера билетов через запятую или каждый с новой строки&#10;Например: 666, 77, 123, 1, 6, 1234" class="bulk-input"></textarea>
+                        <button id="parseBulkTicketsBtn" class="btn btn-info">📋 Разобрать номера</button>
+                        <div id="bulkTicketsList" class="added-tickets-list"></div>
+                    </div>
+                </div>
+                
+                <div class="current-tickets-summary">
+                    <h3>Текущие билеты (<span id="currentTicketsCount">0</span>)</h3>
+                    <div id="currentTicketsDisplay" class="current-tickets-display"></div>
+                    <button id="clearAllCurrentBtn" class="btn btn-danger btn-small">🗑️ Очистить все</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="drawBtn" class="btn btn-primary" disabled>🎲 Провести розыгрыш</button>
+        </div>
+
+        <div id="ticketsManagement" class="tickets-management hidden" style="display: none;">
+            <h2>🎫 Управление билетами</h2>
+            
+            <div class="ticket-form">
+                <h3>Добавить билет</h3>
+                <div class="form-group">
+                    <input type="number" id="newTicketNumber" placeholder="Номер билета" class="form-input">
+                    <button id="addTicketBtn" class="btn btn-success">➕ Добавить</button>
+                </div>
+            </div>
+
+            <div class="tickets-list-management">
+                <h3>Список билетов (<span id="ticketsCount">0</span>)</h3>
+                <div id="ticketsListManagement" class="tickets-list-editable"></div>
+                <div class="tickets-actions">
+                    <button id="clearAllTicketsBtn" class="btn btn-danger">🗑️ Очистить все</button>
+                    <button id="importTicketsBtn" class="btn btn-info">📥 Импорт из текста</button>
+                    <button id="exportTicketsBtn" class="btn btn-info">📤 Экспорт</button>
+                </div>
+            </div>
+
+            <div id="importModal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h3>Импорт билетов</h3>
+                    <p>Введите номера билетов через запятую или каждый с новой строки:</p>
+                    <textarea id="importTextarea" rows="10" placeholder="666, 77, 123, 1, 6, 1234"></textarea>
+                    <div class="modal-actions">
+                        <button id="importConfirmBtn" class="btn btn-primary">Импортировать</button>
+                        <button id="importCancelBtn" class="btn btn-secondary">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Получение блоков Bitcoin...</p>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div class="result-section">
+                <h2>📊 Результаты розыгрыша</h2>
+                
+                <div class="block-info">
+                    <h3>Блоки Bitcoin</h3>
+                    <div id="blockHashes" class="block-hashes"></div>
+                </div>
+
+                <div class="seed-info">
+                    <h3>Seed (случайность)</h3>
+                    <div id="seedDisplay" class="seed-display"></div>
+                </div>
+
+                <div class="winner-section">
+                    <h3>🏆 Победитель</h3>
+                    <div id="winnerDisplay" class="winner-display"></div>
+                </div>
+
+                <div class="tickets-section">
+                    <h3>Все билеты и их score</h3>
+                    <div class="tickets-controls">
+                        <label>
+                            <input type="checkbox" id="showAllScores"> Показать все score
+                        </label>
+                    </div>
+                    <div id="ticketsList" class="tickets-list"></div>
+                </div>
+
+                <div class="proof-section">
+                    <h3>🔍 Данные для проверки</h3>
+                    <button id="copyProofBtn" class="btn btn-small">📋 Копировать JSON</button>
+                    <pre id="proofData" class="proof-data"></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <div class="visual-flow">
+            <h2>Визуальная схема процесса</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-icon">⛓️</div>
+                    <div class="flow-label">Bitcoin Block</div>
+                    <div id="flowBlock" class="flow-value">-</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🎲</div>
+                    <div class="flow-label">Random Seed</div>
+                    <div id="flowSeed" class="flow-value">-</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🎫</div>
+                    <div class="flow-label">Tickets</div>
+                    <div id="flowTickets" class="flow-value">-</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🔢</div>
+                    <div class="flow-label">SHA256(seed:ticket)</div>
+                    <div id="flowScores" class="flow-value">-</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step winner-step">
+                    <div class="flow-icon">🏆</div>
+                    <div class="flow-label">Winner (min score)</div>
+                    <div id="flowWinner" class="flow-value">-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+
