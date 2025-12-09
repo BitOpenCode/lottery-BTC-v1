@@ -202,11 +202,12 @@ function updateDrawButton() {
     const drawBtn = document.getElementById('drawBtn');
     if (currentTickets.length > 0) {
         drawBtn.disabled = false;
-        drawBtn.textContent = `🎲 Провести розыгрыш (${currentTickets.length} билетов)`;
+        drawBtn.textContent = `🎲 Провести розыгрыш (${currentTickets.length})`;
     } else {
         drawBtn.disabled = true;
         drawBtn.textContent = '🎲 Провести розыгрыш';
     }
+    updateTelegramMainButton();
 }
 
 // Загрузка списка билетов
@@ -591,8 +592,28 @@ function showSuccess(message) {
     errorEl.style.borderLeftColor = '#28a745';
     errorEl.classList.remove('hidden');
     
+    // Вибрация в Telegram
+    if (tg && tg.HapticFeedback) {
+        tg.HapticFeedback.notificationOccurred('success');
+    }
+    
     setTimeout(() => {
         errorEl.classList.add('hidden');
     }, 3000);
+}
+
+// Показать ошибку с вибрацией
+function showError(message) {
+    const errorEl = document.getElementById('error');
+    errorEl.textContent = `❌ Ошибка: ${message}`;
+    errorEl.style.background = '#ffebee';
+    errorEl.style.color = '#c62828';
+    errorEl.style.borderLeftColor = '#dc3545';
+    errorEl.classList.remove('hidden');
+    
+    // Вибрация в Telegram
+    if (tg && tg.HapticFeedback) {
+        tg.HapticFeedback.notificationOccurred('error');
+    }
 }
 
