@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Очистка всех билетов
     document.getElementById('clearAllCurrentBtn').addEventListener('click', clearAllCurrentTickets);
     
+    // Показать процесс генерации seed
+    const showSeedBtn = document.getElementById('showSeedGenerationBtn');
+    if (showSeedBtn) {
+        showSeedBtn.addEventListener('click', toggleSeedGeneration);
+    }
+    
     // Обновляем кнопку розыгрыша при изменении билетов
     updateDrawButton();
 });
@@ -234,7 +240,11 @@ function displayResults(result) {
     
     // Seed
     displaySeed(result.seed_hex);
-    displaySeedGeneration(result.block_hashes, result.seed_hex);
+    
+    // Процесс генерации seed (скрыт по умолчанию)
+    if (result.block_hashes) {
+        displaySeedGeneration(result.block_hashes, result.seed_hex);
+    }
     
     // Победитель
     displayWinner(result.winner, result.scores[result.winner]);
