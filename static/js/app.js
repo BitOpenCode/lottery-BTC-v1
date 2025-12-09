@@ -268,8 +268,8 @@ function displaySeed(seedHex) {
 function displayWinner(winner, score) {
     const container = document.getElementById('winnerDisplay');
     container.innerHTML = `
-        <div style="font-size: 1.2em; margin-bottom: 10px;">Билет №${winner}</div>
-        <div style="font-size: 0.7em; color: #666;">Score: ${score}</div>
+        <div style="font-size: 1.2em; margin-bottom: 10px; word-break: break-word;">Билет №${winner}</div>
+        <div class="winner-score">Score: ${score}</div>
     `;
 }
 

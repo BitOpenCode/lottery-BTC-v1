@@ -452,13 +452,33 @@ header h1 {
 
 .winner-display {
     background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-    padding: 24px;
+    padding: 24px 16px;
     border-radius: 12px;
     text-align: center;
     font-size: 24px;
     font-weight: 700;
     color: #333;
     box-shadow: var(--shadow);
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    overflow-x: auto;
+}
+
+.winner-display > div {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.winner-display .winner-score {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+    font-size: 12px;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    margin-top: 8px;
+    padding: 0 8px;
 }
 
 .tickets-controls {
