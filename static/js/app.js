@@ -76,6 +76,15 @@ async function conductDraw() {
         if (data.success) {
             currentResult = data.result;
             displayResults(data.result);
+            
+            // Показываем предупреждения, если есть
+            if (data.warnings && data.warnings.length > 0) {
+                data.warnings.forEach(warning => {
+                    if (warning.type === 'duplicate_blocks') {
+                        showError(warning.message);
+                    }
+                });
+            }
         } else {
             throw new Error(data.error || 'Ошибка при проведении розыгрыша');
         }
