@@ -279,9 +279,30 @@ function displayResults(result) {
 function displayBlockHashes(hashes, heights) {
     const container = document.getElementById('blockHashes');
     container.innerHTML = hashes.map((hash, index) => {
-        const height = heights && heights[index] ? `Блок #${heights[index]}` : `Блок ${index + 1}`;
+        const height = heights && heights[index] ? heights[index] : null;
+        const heightLabel = height ? `Блок #${height}` : `Блок ${index + 1}`;
+        
+        // Ссылки на блокчейн-эксплореры
+        const blockstreamLink = height 
+            ? `https://blockstream.info/block-height/${height}`
+            : `https://blockstream.info/block/${hash}`;
+        const blockchainLink = height
+            ? `https://www.blockchain.com/btc/block-height/${height}`
+            : `https://www.blockchain.com/btc/block/${hash}`;
+        
         return `<div class="block-hash-item">
-            <strong>${height}:</strong> ${hash}
+            <div class="block-header">
+                <strong>${heightLabel}:</strong>
+                <div class="block-links">
+                    <a href="${blockstreamLink}" target="_blank" rel="noopener noreferrer" class="block-link">
+                        🔍 Blockstream
+                    </a>
+                    <a href="${blockchainLink}" target="_blank" rel="noopener noreferrer" class="block-link">
+                        🔗 Blockchain.com
+                    </a>
+                </div>
+            </div>
+            <div class="block-hash-value">${hash}</div>
         </div>`;
     }).join('');
 }

@@ -209,3 +209,4 @@ console.log(window.Telegram?.WebApp?.themeParams);
 
 После выполнения всех шагов ваше приложение будет доступно как Telegram Mini App!
 
+
