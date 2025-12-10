@@ -78,6 +78,10 @@ async function conductDraw() {
     const resultsEl = document.getElementById('results');
     const errorEl = document.getElementById('error');
     
+    // Засекаем время начала для минимального показа лоадера (5 секунд)
+    const startTime = Date.now();
+    const minLoadingTime = 5000; // 5 секунд
+    
     // Плавное появление лоадера
     loadingEl.classList.remove('hidden');
     setTimeout(() => {
@@ -130,11 +134,18 @@ async function conductDraw() {
         console.error('Ошибка при проведении розыгрыша:', error);
         showError('Ошибка: ' + error.message);
     } finally {
-        // Плавное исчезновение лоадера
-        loadingEl.style.opacity = '0';
+        // Вычисляем оставшееся время для показа лоадера минимум 5 секунд
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+        
+        // Ждем оставшееся время перед скрытием лоадера
         setTimeout(() => {
-            loadingEl.classList.add('hidden');
-        }, 300);
+            // Плавное исчезновение лоадера
+            loadingEl.style.opacity = '0';
+            setTimeout(() => {
+                loadingEl.classList.add('hidden');
+            }, 300);
+        }, remainingTime);
     }
 }
 
