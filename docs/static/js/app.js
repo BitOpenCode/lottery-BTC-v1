@@ -1,7 +1,5 @@
 // BTC Lottery Frontend JavaScript
 
-// Настройка API базового URL
-// Оставляем пустым - используем клиентскую логику (работает без бэкенда!)
 const API_BASE = '';
 
 let currentResult = null;
@@ -85,18 +83,45 @@ async function conductDraw() {
     errorEl.classList.add('hidden');
     
     try {
-        // Проверяем, загружена ли клиентская логика
-        if (typeof conductLotteryDraw === 'undefined') {
-            throw new Error('Клиентская логика не загружена. Убедитесь, что файл lottery-client.js подключен.');
-        }
-        
         // Используем клиентскую логику (работает без бэкенда!)
-        const result = await conductLotteryDraw(currentTickets, 3);
-        
-        currentResult = result;
-        displayResults(result);
-        
-        showSuccess('Розыгрыш успешно проведен!');
+        // Если есть API_BASE и он не пустой, используем бэкенд, иначе клиентскую логику
+        if (API_BASE && API_BASE.trim() !== '') {
+            // Используем бэкенд если он настроен
+            const response = await fetch(`${API_BASE}/api/lottery/draw`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    block_count: 3,
+                    tickets: currentTickets
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                currentResult = data.result;
+                displayResults(data.result);
+                
+                // Показываем предупреждения, если есть
+                if (data.warnings && data.warnings.length > 0) {
+                    data.warnings.forEach(warning => {
+                        if (warning.type === 'duplicate_blocks') {
+                            showError(warning.message);
+                        }
+                    });
+                }
+            } else {
+                throw new Error(data.error || 'Ошибка при проведении розыгрыша');
+            }
+        } else {
+            // Используем клиентскую логику (работает полностью в браузере!)
+            const result = await conductLotteryDraw(currentTickets, 3);
+            currentResult = result;
+            displayResults(result);
+            showSuccess('Розыгрыш успешно проведен!');
+        }
     } catch (error) {
         console.error('Ошибка при проведении розыгрыша:', error);
         showError('Ошибка: ' + error.message);
