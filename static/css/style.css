@@ -723,7 +723,6 @@ header h1 {
 }
 
 .step-data {
-    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
     font-size: 12px;
     color: rgba(255, 255, 255, 0.9);
     word-break: break-all;
@@ -733,6 +732,16 @@ header h1 {
     border-radius: 8px;
     max-height: none;
     overflow-y: visible;
+}
+
+.step-data strong {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+}
+
+.step-data code,
+.step-data span[style*="monospace"] {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
 }
 
 .process-arrow {
