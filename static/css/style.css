@@ -938,11 +938,13 @@ header h1 {
 }
 
 .flow-step {
-    background: var(--tg-theme-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 16px;
-    min-width: 200px;
     text-align: center;
     transition: all 0.2s;
 }
