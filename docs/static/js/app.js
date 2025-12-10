@@ -1082,18 +1082,40 @@ function initTermsModal() {
     const termsModal = document.getElementById('termsModal');
     const closeTermsBtn = document.getElementById('closeTermsBtn');
     
-    if (!termsBtn || !termsModal || !closeTermsBtn) return;
+    console.log('initTermsModal вызвана');
+    console.log('termsBtn:', termsBtn);
+    console.log('termsModal:', termsModal);
+    console.log('closeTermsBtn:', closeTermsBtn);
+    
+    if (!termsBtn) {
+        console.error('❌ termsBtn не найден!');
+        return;
+    }
+    if (!termsModal) {
+        console.error('❌ termsModal не найден!');
+        return;
+    }
+    if (!closeTermsBtn) {
+        console.error('❌ closeTermsBtn не найден!');
+        return;
+    }
     
     // Открытие модального окна
-    termsBtn.addEventListener('click', function() {
+    termsBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Клик на termsBtn!');
         termsModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden'; // Блокируем скролл фона
+        console.log('Модальное окно открыто');
         
         // Тактильная обратная связь для Telegram Mini App
         if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
             window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
         }
     });
+    
+    console.log('✅ Обработчик клика добавлен на termsBtn');
     
     // Закрытие модального окна
     function closeModal() {
