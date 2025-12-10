@@ -534,11 +534,18 @@ header h1 {
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    text-align: center;
 }
 
 .loading:not(.hidden) {
     opacity: 1;
     pointer-events: all;
+}
+
+/* Скрываем любой текст внутри loading */
+.loading p,
+.loading .spinner {
+    display: none !important;
 }
 
 /* Новый лоадер с анимацией */
