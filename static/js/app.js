@@ -126,7 +126,7 @@ async function conductDraw() {
     const minLoadingTime = 5000; // 5 секунд
     
     // Показываем лоадер
-    loadingEl.classList.remove('hidden');
+    showLoader();
     resultsEl.classList.add('hidden');
     errorEl.classList.add('hidden');
     
@@ -188,9 +188,73 @@ async function conductDraw() {
         
         // Ждем оставшееся время перед скрытием лоадера
         setTimeout(() => {
-            loadingEl.classList.add('hidden');
+            hideLoader();
         }, remainingTime);
     }
+}
+
+// Показать лоадер с блокировкой интерфейса
+function showLoader() {
+    const loadingEl = document.getElementById('loading');
+    if (!loadingEl) return;
+    
+    // Скрываем клавиатуру
+    const activeElement = document.activeElement;
+    if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
+        activeElement.blur();
+    }
+    
+    // Блокируем скролл
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
+    
+    // Блокируем zoom (pinch-to-zoom)
+    const preventZoom = (e) => {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    };
+    const preventScroll = (e) => {
+        e.preventDefault();
+    };
+    
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('touchstart', preventZoom, { passive: false });
+    document.addEventListener('gesturestart', (e) => e.preventDefault());
+    document.addEventListener('gesturechange', (e) => e.preventDefault());
+    document.addEventListener('gestureend', (e) => e.preventDefault());
+    
+    // Сохраняем обработчики для последующего удаления
+    loadingEl._preventScroll = preventScroll;
+    loadingEl._preventZoom = preventZoom;
+    
+    // Показываем лоадер
+    loadingEl.classList.remove('hidden');
+}
+
+// Скрыть лоадер и разблокировать интерфейс
+function hideLoader() {
+    const loadingEl = document.getElementById('loading');
+    if (!loadingEl) return;
+    
+    // Разблокируем скролл
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.height = '';
+    
+    // Удаляем обработчики блокировки zoom
+    if (loadingEl._preventScroll) {
+        document.removeEventListener('touchmove', loadingEl._preventScroll);
+    }
+    if (loadingEl._preventZoom) {
+        document.removeEventListener('touchstart', loadingEl._preventZoom);
+    }
+    
+    // Скрываем лоадер
+    loadingEl.classList.add('hidden');
 }
 
 // Добавление билета по одному

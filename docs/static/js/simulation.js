@@ -332,8 +332,12 @@ async function conductSimulationDraw() {
     }
     
     // Показываем лоадер
-    const loadingEl = document.getElementById('loading');
-    if (loadingEl) loadingEl.classList.remove('hidden');
+    if (typeof showLoader === 'function') {
+        showLoader();
+    } else {
+        const loadingEl = document.getElementById('loading');
+        if (loadingEl) loadingEl.classList.remove('hidden');
+    }
     
     try {
         // Используем все выбранные билеты для розыгрыша
@@ -382,7 +386,12 @@ async function conductSimulationDraw() {
         console.error('Ошибка при проведении розыгрыша:', error);
         showError('Ошибка: ' + error.message);
     } finally {
-        if (loadingEl) loadingEl.classList.add('hidden');
+        if (typeof hideLoader === 'function') {
+            hideLoader();
+        } else {
+            const loadingEl = document.getElementById('loading');
+            if (loadingEl) loadingEl.classList.add('hidden');
+        }
     }
 }
 
