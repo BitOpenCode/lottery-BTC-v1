@@ -54,10 +54,11 @@ header {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 16px;
     margin-bottom: 8px;
     position: relative;
+    padding-left: 16px;
 }
 
 header h1 {
