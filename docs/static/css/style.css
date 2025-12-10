@@ -124,7 +124,7 @@ header h1 {
 
 .subtitle {
     font-size: 14px;
-    color: var(--tg-theme-hint-color);
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.4;
 }
 
@@ -1015,9 +1015,39 @@ header h1 {
 }
 
 .ticket-item.winner {
-    border-color: #ffd700;
-    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    border: 2px solid rgba(92, 103, 255, 0.5);
+    background: linear-gradient(45deg, #1a1a1a, #262626) !important;
     font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-item.winner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0, 255, 170, 0.1) 0%, rgba(0, 162, 255, 0.05) 50%, transparent 100%);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.ticket-item.winner:hover::before {
+    opacity: 1;
+}
+
+.ticket-item.winner .ticket-number {
+    background: linear-gradient(45deg, #00ffaa, #00a2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.3));
+    text-shadow: 0 0 10px rgba(92, 103, 255, 0.5), 0 0 20px rgba(92, 103, 255, 0.3);
+}
+
+.ticket-item.winner .ticket-score {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .ticket-number {
