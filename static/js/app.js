@@ -108,6 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Обновляем кнопку розыгрыша при изменении билетов
     updateDrawButton();
+    
+    // Инициализация кнопки прокрутки наверх
+    initScrollToTop();
 });
 
 // Проведение розыгрыша

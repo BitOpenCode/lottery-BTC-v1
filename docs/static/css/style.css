@@ -1153,6 +1153,83 @@ header h1 {
     opacity: 0 !important;
 }
 
+/* Кнопка прокрутки наверх */
+.scroll-to-top {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, rgba(92, 103, 255, 0.9), rgba(173, 81, 255, 0.9)) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 20px rgba(92, 103, 255, 0.4), 
+                0 0 0 0 rgba(92, 103, 255, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    cursor: pointer !important;
+    z-index: 9998 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(20px) scale(0.8) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.scroll-to-top:not(.hidden) {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+.scroll-to-top:hover {
+    background: linear-gradient(135deg, rgba(92, 103, 255, 1), rgba(173, 81, 255, 1)) !important;
+    box-shadow: 0 6px 25px rgba(92, 103, 255, 0.6), 
+                0 0 0 4px rgba(92, 103, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) scale(1.05) !important;
+}
+
+.scroll-to-top:active {
+    transform: translateY(0) scale(0.95) !important;
+    box-shadow: 0 2px 15px rgba(92, 103, 255, 0.5), 
+                0 0 0 2px rgba(92, 103, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.scroll-to-top svg {
+    width: 24px !important;
+    height: 24px !important;
+    transition: transform 0.3s ease !important;
+}
+
+.scroll-to-top:hover svg {
+    transform: translateY(-2px) !important;
+}
+
+.scroll-to-top:active svg {
+    transform: translateY(0) !important;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 20px !important;
+        right: 20px !important;
+        width: 52px !important;
+        height: 52px !important;
+    }
+    
+    .scroll-to-top svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+}
+
 /* Results */
 .results {
     margin-top: 16px;
