@@ -14,8 +14,8 @@ let simulationState = {
     botThinking: false
 };
 
-// Переключение режимов
-function switchMode(mode) {
+// Переключение режимов (глобальная функция)
+window.switchMode = function switchMode(mode) {
     simulationState.mode = mode;
     
     const normalModeEl = document.getElementById('normalMode');
@@ -37,15 +37,15 @@ function switchMode(mode) {
         // Инициализируем симуляцию
         initSimulation();
     }
-}
+};
 
-// Инициализация симуляции
-function initSimulation() {
+// Инициализация симуляции (глобальная функция)
+window.initSimulation = function initSimulation() {
     resetSimulation();
     createTicketCards();
     showPlayerTickets('player');
     updateSimulationUI();
-}
+};
 
 // Сброс симуляции
 function resetSimulation() {
