@@ -968,7 +968,7 @@ header h1 {
     text-align: center;
     font-size: 24px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     max-width: 100%;
     box-sizing: border-box;
     overflow-wrap: break-word;
@@ -976,35 +976,41 @@ header h1 {
     padding: 0;
 }
 
-.winner-display > div {
+.winner-display > div:first-child {
     max-width: 100%;
     overflow-wrap: break-word;
     word-break: break-word;
-    background: linear-gradient(45deg, #00ffaa, #00a2ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.3));
-    text-shadow: 0 0 10px rgba(92, 103, 255, 0.5), 0 0 20px rgba(92, 103, 255, 0.3);
+    color: rgba(255, 255, 255, 0.98);
+    font-size: 28px;
+    font-weight: 800;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.1);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
 }
 
 .winner-display .winner-score {
     font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-    font-size: 12px;
+    font-size: 13px;
     word-break: break-all;
     overflow-wrap: anywhere;
-    margin-top: 8px;
+    margin-top: 12px;
     padding: 0 8px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     font-weight: 500;
+    line-height: 1.6;
+}
+
+.winner-display .winner-score .score-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    margin-right: 8px;
 }
 
 .winner-display .winner-score .score-value {
-    background: linear-gradient(45deg, #00ffaa, #00a2ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 170, 0.3));
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
-    color: transparent;
+    font-size: 14px;
+    letter-spacing: 0.3px;
 }
 
 .tickets-controls {
