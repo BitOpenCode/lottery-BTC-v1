@@ -800,26 +800,153 @@ header h1 {
     color: var(--primary-color);
 }
 
-.winner-display {
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+/* Cyber Card стили для карточки победителя */
+.winner-card-container {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    margin: 16px 0;
+}
+
+.winner-card-canvas {
+    perspective: 800px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0;
+}
+
+.winner-tracker {
+    position: relative;
+    z-index: 200;
+}
+
+.winner-tracker.tr-1 { grid-area: 1 / 1; }
+.winner-tracker.tr-2 { grid-area: 1 / 2; }
+.winner-tracker.tr-3 { grid-area: 1 / 3; }
+.winner-tracker.tr-4 { grid-area: 2 / 1; }
+.winner-tracker.tr-5 { grid-area: 2 / 2; }
+.winner-tracker.tr-6 { grid-area: 2 / 3; }
+.winner-tracker.tr-7 { grid-area: 3 / 1; }
+.winner-tracker.tr-8 { grid-area: 3 / 2; }
+.winner-tracker.tr-9 { grid-area: 3 / 3; }
+
+.winner-tracker:hover {
+    cursor: pointer;
+}
+
+#winnerCard {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    transition: 700ms;
+    background: linear-gradient(45deg, #1a1a1a, #262626);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.winner-card-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
     padding: 24px 16px;
-    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.winner-card-glare {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 45%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 55%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0;
+    transition: opacity 300ms;
+    pointer-events: none;
+}
+
+.winner-cyber-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.winner-cyber-lines span {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, rgba(92, 103, 255, 0.2), transparent);
+}
+
+.winner-cyber-lines span:nth-child(1) {
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: winnerLineGrow 3s linear infinite;
+}
+
+.winner-cyber-lines span:nth-child(2) {
+    top: 40%;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: right;
+    animation: winnerLineGrow 3s linear infinite 1s;
+}
+
+.winner-cyber-lines span:nth-child(3) {
+    top: 60%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: winnerLineGrow 3s linear infinite 2s;
+}
+
+.winner-cyber-lines span:nth-child(4) {
+    top: 80%;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: right;
+    animation: winnerLineGrow 3s linear infinite 1.5s;
+}
+
+.winner-display {
+    position: relative;
+    z-index: 10;
     text-align: center;
     font-size: 24px;
     font-weight: 700;
-    color: #333;
-    box-shadow: var(--shadow);
+    color: rgba(255, 255, 255, 0.9);
     max-width: 100%;
     box-sizing: border-box;
     overflow-wrap: break-word;
     word-break: break-word;
-    overflow-x: auto;
+    padding: 0;
 }
 
 .winner-display > div {
     max-width: 100%;
     overflow-wrap: break-word;
     word-break: break-word;
+    background: linear-gradient(45deg, #00ffaa, #00a2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.3));
+    text-shadow: 0 0 10px rgba(92, 103, 255, 0.5), 0 0 20px rgba(92, 103, 255, 0.3);
 }
 
 .winner-display .winner-score {
@@ -829,6 +956,8 @@ header h1 {
     overflow-wrap: anywhere;
     margin-top: 8px;
     padding: 0 8px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
 }
 
 .tickets-controls {
@@ -1147,4 +1276,191 @@ header h1 {
         --tg-theme-secondary-bg-color: #181818;
         --border-color: #2f2f2f;
     }
+}
+
+/* Дополнительные стили для Cyber Card эффектов */
+.winner-glowing-elements {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.winner-glow-1,
+.winner-glow-2,
+.winner-glow-3 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(0, 255, 170, 0.3) 0%, rgba(0, 255, 170, 0) 70%);
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.winner-glow-1 {
+    top: -20px;
+    left: -20px;
+}
+
+.winner-glow-2 {
+    top: 50%;
+    right: -30px;
+    transform: translateY(-50%);
+}
+
+.winner-glow-3 {
+    bottom: -20px;
+    left: 30%;
+}
+
+.winner-card-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.winner-card-particles span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #00ffaa;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.winner-card-particles span:nth-child(1) { --x: 1; --y: -1; top: 40%; left: 20%; }
+.winner-card-particles span:nth-child(2) { --x: -1; --y: -1; top: 60%; right: 20%; }
+.winner-card-particles span:nth-child(3) { --x: 0.5; --y: 1; top: 20%; left: 40%; }
+.winner-card-particles span:nth-child(4) { --x: -0.5; --y: 1; top: 80%; right: 40%; }
+.winner-card-particles span:nth-child(5) { --x: 1; --y: 0.5; top: 30%; left: 60%; }
+.winner-card-particles span:nth-child(6) { --x: -1; --y: 0.5; top: 70%; right: 60%; }
+
+.winner-corner-elements {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.winner-corner-elements span {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(92, 103, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.winner-corner-elements span:nth-child(1) {
+    top: 10px;
+    left: 10px;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.winner-corner-elements span:nth-child(2) {
+    top: 10px;
+    right: 10px;
+    border-left: 0;
+    border-bottom: 0;
+}
+
+.winner-corner-elements span:nth-child(3) {
+    bottom: 10px;
+    left: 10px;
+    border-right: 0;
+    border-top: 0;
+}
+
+.winner-corner-elements span:nth-child(4) {
+    bottom: 10px;
+    right: 10px;
+    border-left: 0;
+    border-top: 0;
+}
+
+.winner-scan-line {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent, rgba(92, 103, 255, 0.1), transparent);
+    transform: translateY(-100%);
+    animation: winnerScanMove 2s linear infinite;
+    pointer-events: none;
+}
+
+#winnerCard::before {
+    content: "";
+    background: radial-gradient(circle at center, rgba(0, 255, 170, 0.1) 0%, rgba(0, 162, 255, 0.05) 50%, transparent 100%);
+    filter: blur(20px);
+    opacity: 0;
+    width: 150%;
+    height: 150%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+/* Hover эффекты для Cyber Card */
+.winner-tracker:hover ~ #winnerCard .winner-card-glare {
+    opacity: 1;
+}
+
+.winner-tracker:hover ~ #winnerCard .winner-glowing-elements div {
+    opacity: 1;
+}
+
+.winner-tracker:hover ~ #winnerCard .winner-card-particles span {
+    animation: winnerParticleFloat 2s infinite;
+}
+
+.winner-tracker:hover ~ #winnerCard::before {
+    opacity: 1;
+}
+
+.winner-tracker:hover ~ #winnerCard {
+    transition: 300ms;
+    filter: brightness(1.1);
+}
+
+.winner-tracker:hover ~ #winnerCard .winner-corner-elements span {
+    border-color: rgba(92, 103, 255, 0.8);
+    box-shadow: 0 0 10px rgba(92, 103, 255, 0.5);
+}
+
+/* 3D трансформации при наведении */
+.winner-tracker.tr-1:hover ~ #winnerCard { transform: rotateX(20deg) rotateY(-10deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-2:hover ~ #winnerCard { transform: rotateX(20deg) rotateY(0deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-3:hover ~ #winnerCard { transform: rotateX(20deg) rotateY(10deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-4:hover ~ #winnerCard { transform: rotateX(0deg) rotateY(-10deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-5:hover ~ #winnerCard { transform: rotateX(0deg) rotateY(0deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-6:hover ~ #winnerCard { transform: rotateX(0deg) rotateY(10deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-7:hover ~ #winnerCard { transform: rotateX(-20deg) rotateY(-10deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-8:hover ~ #winnerCard { transform: rotateX(-20deg) rotateY(0deg); transition: 125ms ease-in-out; }
+.winner-tracker.tr-9:hover ~ #winnerCard { transform: rotateX(-20deg) rotateY(10deg); transition: 125ms ease-in-out; }
+
+@keyframes winnerLineGrow {
+    0% { transform: scaleX(0); opacity: 0; }
+    50% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(0); opacity: 0; }
+}
+
+@keyframes winnerParticleFloat {
+    0% { transform: translate(0, 0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(calc(var(--x, 0) * 30px), calc(var(--y, 0) * 30px)); opacity: 0; }
+}
+
+@keyframes winnerScanMove {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
