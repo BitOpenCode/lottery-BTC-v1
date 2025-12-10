@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="static/css/style.css?v=2">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -185,36 +185,52 @@
 
                 <div class="winner-section">
                     <h3>🏆 Победитель</h3>
-                    <div class="winner-card-container noselect">
-                        <div class="winner-card-canvas">
-                            <div class="winner-tracker tr-1"></div>
-                            <div class="winner-tracker tr-2"></div>
-                            <div class="winner-tracker tr-3"></div>
-                            <div class="winner-tracker tr-4"></div>
-                            <div class="winner-tracker tr-5"></div>
-                            <div class="winner-tracker tr-6"></div>
-                            <div class="winner-tracker tr-7"></div>
-                            <div class="winner-tracker tr-8"></div>
-                            <div class="winner-tracker tr-9"></div>
-                            <div id="winnerCard" class="winner-card">
-                                <div class="winner-card-content">
-                                    <div class="winner-card-glare"></div>
-                                    <div class="winner-cyber-lines">
+                    <div class="winner-container noselect">
+                        <div class="winner-canvas">
+                            <div class="tracker tr-1"></div>
+                            <div class="tracker tr-2"></div>
+                            <div class="tracker tr-3"></div>
+                            <div class="tracker tr-4"></div>
+                            <div class="tracker tr-5"></div>
+                            <div class="tracker tr-6"></div>
+                            <div class="tracker tr-7"></div>
+                            <div class="tracker tr-8"></div>
+                            <div class="tracker tr-9"></div>
+                            <div class="tracker tr-10"></div>
+                            <div class="tracker tr-11"></div>
+                            <div class="tracker tr-12"></div>
+                            <div class="tracker tr-13"></div>
+                            <div class="tracker tr-14"></div>
+                            <div class="tracker tr-15"></div>
+                            <div class="tracker tr-16"></div>
+                            <div class="tracker tr-17"></div>
+                            <div class="tracker tr-18"></div>
+                            <div class="tracker tr-19"></div>
+                            <div class="tracker tr-20"></div>
+                            <div class="tracker tr-21"></div>
+                            <div class="tracker tr-22"></div>
+                            <div class="tracker tr-23"></div>
+                            <div class="tracker tr-24"></div>
+                            <div class="tracker tr-25"></div>
+                            <div id="winnerCard">
+                                <div class="card-content">
+                                    <div class="card-glare"></div>
+                                    <div class="cyber-lines">
                                         <span></span><span></span><span></span><span></span>
                                     </div>
                                     <div id="winnerDisplay" class="winner-display"></div>
-                                    <div class="winner-glowing-elements">
-                                        <div class="winner-glow-1"></div>
-                                        <div class="winner-glow-2"></div>
-                                        <div class="winner-glow-3"></div>
+                                    <div class="glowing-elements">
+                                        <div class="glow-1"></div>
+                                        <div class="glow-2"></div>
+                                        <div class="glow-3"></div>
                                     </div>
-                                    <div class="winner-card-particles">
+                                    <div class="card-particles">
                                         <span></span><span></span><span></span><span></span><span></span><span></span>
                                     </div>
-                                    <div class="winner-corner-elements">
+                                    <div class="corner-elements">
                                         <span></span><span></span><span></span><span></span>
                                     </div>
-                                    <div class="winner-scan-line"></div>
+                                    <div class="scan-line"></div>
                                 </div>
                             </div>
                         </div>
@@ -310,19 +326,8 @@
         </div>
     </div>
 
-    <script src="static/js/lottery-client.js" defer></script>
-    <script src="static/js/app.js" defer></script>
-    <script>
-        // Проверка загрузки клиентской логики после загрузки всех скриптов
-        window.addEventListener('load', () => {
-            if (typeof conductLotteryDraw === 'undefined') {
-                console.error('❌ Ошибка: lottery-client.js не загружен! Проверьте путь к файлу.');
-                console.log('Текущий путь:', window.location.href);
-            } else {
-                console.log('✅ Клиентская логика загружена успешно');
-            }
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/lottery-client.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
 
