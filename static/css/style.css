@@ -130,9 +130,12 @@ header h1 {
 
 /* Info Section */
 .info-section {
-    background: var(--tg-theme-secondary-bg-color);
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 16px;
-    border-radius: 12px;
     margin-bottom: 16px;
 }
 
@@ -159,9 +162,12 @@ header h1 {
 
 /* Tickets Input Section */
 .tickets-input-section {
-    background: var(--tg-theme-secondary-bg-color);
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 16px;
-    border-radius: 12px;
     margin-bottom: 16px;
 }
 
@@ -316,10 +322,12 @@ header h1 {
 }
 
 .current-tickets-summary {
-    background: var(--tg-theme-bg-color);
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 16px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
 }
 
 .current-tickets-summary h3 {
@@ -548,9 +556,12 @@ header h1 {
 }
 
 .block-info, .seed-info, .winner-section, .tickets-section, .proof-section {
-    background: var(--tg-theme-secondary-bg-color);
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 16px;
-    border-radius: 12px;
     margin-bottom: 16px;
 }
 
@@ -561,14 +572,18 @@ header h1 {
 }
 
 .block-hash-item {
-    background: var(--tg-theme-bg-color);
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 12px;
-    border-radius: 10px;
     font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
     font-size: 12px;
     word-break: break-all;
     border-left: 3px solid var(--primary-color);
     color: var(--tg-theme-text-color);
+    margin-bottom: 8px;
 }
 
 .block-header {
@@ -616,9 +631,12 @@ header h1 {
 }
 
 .seed-display {
-    background: var(--tg-theme-bg-color);
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 12px;
-    border-radius: 10px;
     font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
     font-size: 12px;
     word-break: break-all;
@@ -629,10 +647,12 @@ header h1 {
 /* Процесс генерации seed */
 .seed-generation-process {
     margin-top: 16px;
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 16px;
-    background: var(--tg-theme-bg-color);
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
 }
 
 .seed-generation-process h4 {
@@ -654,8 +674,11 @@ header h1 {
     align-items: flex-start;
     gap: 12px;
     padding: 12px;
-    background: var(--tg-theme-secondary-bg-color);
-    border-radius: 10px;
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     border-left: 3px solid var(--primary-color);
 }
 
@@ -716,10 +739,12 @@ header h1 {
 /* Процесс выбора победителя */
 .winner-selection-process {
     margin-top: 16px;
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 16px;
-    background: var(--tg-theme-bg-color);
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
 }
 
 .winner-selection-process h4 {
@@ -741,8 +766,11 @@ header h1 {
     align-items: flex-start;
     gap: 12px;
     padding: 12px;
-    background: var(--tg-theme-secondary-bg-color);
-    border-radius: 10px;
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     border-left: 3px solid var(--primary-color);
 }
 
@@ -817,11 +845,14 @@ header h1 {
 }
 
 .ticket-item {
-    background: var(--tg-theme-bg-color);
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
     transition: all 0.2s;
+    margin-bottom: 8px;
 }
 
 .ticket-item.winner {
@@ -849,10 +880,13 @@ header h1 {
 }
 
 .proof-data {
-    background: #1e1e1e;
+    width: 100%;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
     color: #d4d4d4;
     padding: 16px;
-    border-radius: 10px;
     overflow-x: auto;
     font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
     font-size: 12px;
