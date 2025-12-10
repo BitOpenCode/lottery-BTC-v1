@@ -146,11 +146,11 @@ function createTicketCard(ticketNumber) {
     
     const title = document.createElement('div');
     title.className = 'ticket-card-title';
-    title.textContent = `Ticket #${ticketNumber}`; // Номер карточки всегда виден
+    title.textContent = ticketNumber; // Только номер без текста
     
     const subtitle = document.createElement('div');
     subtitle.className = 'ticket-card-subtitle';
-    subtitle.textContent = `Билет ${ticketNumber}`;
+    subtitle.textContent = ''; // Убираем русский текст
     
     card.appendChild(prompt);
     card.appendChild(title);
