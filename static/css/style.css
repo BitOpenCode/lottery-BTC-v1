@@ -800,7 +800,7 @@ header h1 {
     background: #212121;
     box-shadow: 15px 15px 30px rgb(25, 25, 25),
                 -15px -15px 30px rgb(60, 60, 60);
-    border-left-color: #ffd700;
+    border-left: 3px solid rgba(92, 103, 255, 0.5);
 }
 
 .selection-note {
