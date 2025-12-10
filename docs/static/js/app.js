@@ -78,7 +78,11 @@ async function conductDraw() {
     const resultsEl = document.getElementById('results');
     const errorEl = document.getElementById('error');
     
+    // Плавное появление лоадера
     loadingEl.classList.remove('hidden');
+    setTimeout(() => {
+        loadingEl.style.opacity = '1';
+    }, 10);
     resultsEl.classList.add('hidden');
     errorEl.classList.add('hidden');
     
@@ -126,7 +130,11 @@ async function conductDraw() {
         console.error('Ошибка при проведении розыгрыша:', error);
         showError('Ошибка: ' + error.message);
     } finally {
-        loadingEl.classList.add('hidden');
+        // Плавное исчезновение лоадера
+        loadingEl.style.opacity = '0';
+        setTimeout(() => {
+            loadingEl.classList.add('hidden');
+        }, 300);
     }
 }
 
