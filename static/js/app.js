@@ -1041,3 +1041,85 @@ function showError(message) {
     }
 }
 
+// Инициализация кнопки прокрутки наверх
+function initScrollToTop() {
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    if (!scrollToTopBtn) return;
+    
+    // Показываем/скрываем кнопку при прокрутке
+    function toggleScrollButton() {
+        if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.remove('hidden');
+        } else {
+            scrollToTopBtn.classList.add('hidden');
+        }
+    }
+    
+    // Обработчик клика для прокрутки наверх
+    scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        // Тактильная обратная связь для Telegram Mini App
+        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+        }
+    });
+    
+    // Обработчики прокрутки
+    window.addEventListener('scroll', toggleScrollButton, { passive: true });
+    window.addEventListener('touchmove', toggleScrollButton, { passive: true });
+    
+    // Проверяем начальное состояние
+    toggleScrollButton();
+}
+
+// Инициализация модального окна Terms
+function initTermsModal() {
+    const termsBtn = document.getElementById('termsBtn');
+    const termsModal = document.getElementById('termsModal');
+    const closeTermsBtn = document.getElementById('closeTermsBtn');
+    
+    if (!termsBtn || !termsModal || !closeTermsBtn) return;
+    
+    // Открытие модального окна
+    termsBtn.addEventListener('click', function() {
+        termsModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Блокируем скролл фона
+        
+        // Тактильная обратная связь для Telegram Mini App
+        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+        }
+    });
+    
+    // Закрытие модального окна
+    function closeModal() {
+        termsModal.classList.add('hidden');
+        document.body.style.overflow = ''; // Разблокируем скролл
+        
+        // Тактильная обратная связь
+        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+        }
+    }
+    
+    closeTermsBtn.addEventListener('click', closeModal);
+    
+    // Закрытие при клике вне модального окна
+    termsModal.addEventListener('click', function(e) {
+        if (e.target === termsModal) {
+            closeModal();
+        }
+    });
+    
+    // Закрытие по Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !termsModal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+}
+
