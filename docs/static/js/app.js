@@ -111,6 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Инициализация кнопки прокрутки наверх
     initScrollToTop();
+    
+    // Инициализация модального окна Terms
+    initTermsModal();
 });
 
 // Проведение розыгрыша
