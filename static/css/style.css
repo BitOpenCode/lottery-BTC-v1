@@ -1021,18 +1021,23 @@ header h1 {
 /* Loading */
 /* Лоадер */
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    opacity: 1;
-    transition: opacity 0.3s ease;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.85) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 99999 !important;
+    opacity: 1 !important;
+    transition: opacity 0.3s ease !important;
+    touch-action: none !important;
+    -webkit-overflow-scrolling: none !important;
+    overscroll-behavior: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
 }
 
 .loading-overlay.hidden {
