@@ -541,7 +541,7 @@ header h1 {
     gap: 12px;
     margin: 24px 0;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap !important;
     width: 100%;
     visibility: visible !important;
     opacity: 1 !important;
@@ -560,10 +560,11 @@ header h1 {
     transition: all 0.2s ease !important;
     box-shadow: inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.2), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3), 0 2rem 2rem rgba(0, 0, 0, 0.4), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.9) !important;
     padding: 0 !important;
-    flex: 1 1 auto !important;
+    flex: 0 1 auto !important;
     min-width: 140px !important;
     max-width: 200px !important;
-    width: auto !important;
+    width: 100% !important;
+    max-width: calc(50% - 6px) !important;
     height: auto !important;
     display: flex !important;
     align-items: center !important;
