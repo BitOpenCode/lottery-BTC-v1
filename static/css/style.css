@@ -950,8 +950,10 @@ header h1 {
 }
 
 .flow-step.winner-step {
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-    border-color: #ffd700;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
+    border: 2px solid #ffd700;
 }
 
 .flow-icon {
