@@ -470,7 +470,10 @@ function displayWinner(winner, score) {
     const container = document.getElementById('winnerDisplay');
     container.innerHTML = `
         <div style="font-size: 1.2em; margin-bottom: 10px; word-break: break-word;">Билет №${winner}</div>
-        <div class="winner-score">Score: ${score}</div>
+        <div class="winner-score">
+            <span style="color: rgba(255, 255, 255, 0.6);">Score:</span>
+            <span class="score-value">${score}</span>
+        </div>
     `;
 }
 
