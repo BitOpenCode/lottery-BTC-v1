@@ -1235,7 +1235,8 @@ header h1 {
     position: fixed !important;
     top: 16px !important;
     right: 16px !important;
-    z-index: 10000 !important;
+    z-index: 99999 !important;
+    pointer-events: auto !important;
     padding: 8px 16px !important;
     background: linear-gradient(135deg, rgba(92, 103, 255, 0.9), rgba(173, 81, 255, 0.9)) !important;
     border: 2px solid rgba(255, 255, 255, 0.2) !important;
