@@ -5,20 +5,36 @@
  * Получает хеш блока Bitcoin по высоте
  */
 async function getBlockHashByHeight(height) {
-    try {
-        const response = await fetch(`https://blockstream.info/api/block-height/${height}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
+    const maxRetries = 3;
+    const timeout = 10000; // 10 секунд
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            const response = await fetch(`https://blockstream.info/api/block-height/${height}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'text/plain'
+                },
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (response.ok) {
+                return (await response.text()).trim();
             }
-        });
-        if (response.ok) {
-            return (await response.text()).trim();
+            throw new Error(`HTTP ${response.status}`);
+        } catch (error) {
+            console.error(`Попытка ${attempt}/${maxRetries} - Ошибка при получении блока ${height}:`, error);
+            if (attempt === maxRetries) {
+                throw new Error(`Не удалось получить блок ${height} после ${maxRetries} попыток: ${error.message}`);
+            }
+            // Ждем перед следующей попыткой
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
         }
-        throw new Error(`HTTP ${response.status}`);
-    } catch (error) {
-        console.error(`Ошибка при получении блока ${height}:`, error);
-        throw error;
     }
 }
 
@@ -26,20 +42,36 @@ async function getBlockHashByHeight(height) {
  * Получает высоту последнего блока Bitcoin
  */
 async function getLatestBlockHeight() {
-    try {
-        const response = await fetch('https://blockstream.info/api/blocks/tip/height', {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
+    const maxRetries = 3;
+    const timeout = 10000; // 10 секунд
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            const response = await fetch('https://blockstream.info/api/blocks/tip/height', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'text/plain'
+                },
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (response.ok) {
+                return parseInt((await response.text()).trim());
             }
-        });
-        if (response.ok) {
-            return parseInt((await response.text()).trim());
+            throw new Error(`HTTP ${response.status}`);
+        } catch (error) {
+            console.error(`Попытка ${attempt}/${maxRetries} - Ошибка при получении высоты блока:`, error);
+            if (attempt === maxRetries) {
+                throw new Error(`Не удалось получить высоту блока после ${maxRetries} попыток: ${error.message}`);
+            }
+            // Ждем перед следующей попыткой
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
         }
-        throw new Error(`HTTP ${response.status}`);
-    } catch (error) {
-        console.error('Ошибка при получении высоты блока:', error);
-        throw error;
     }
 }
 

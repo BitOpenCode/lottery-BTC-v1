@@ -82,11 +82,8 @@ async function conductDraw() {
     const startTime = Date.now();
     const minLoadingTime = 5000; // 5 секунд
     
-    // Плавное появление лоадера
+    // Показываем лоадер
     loadingEl.classList.remove('hidden');
-    setTimeout(() => {
-        loadingEl.style.opacity = '1';
-    }, 10);
     resultsEl.classList.add('hidden');
     errorEl.classList.add('hidden');
     
@@ -132,7 +129,15 @@ async function conductDraw() {
         }
     } catch (error) {
         console.error('Ошибка при проведении розыгрыша:', error);
-        showError('Ошибка: ' + error.message);
+        let errorMessage = 'Ошибка при проведении розыгрыша';
+        if (error.message.includes('Failed to fetch') || error.message.includes('ERR_SOCKET_NOT_CONNECTED')) {
+            errorMessage = 'Ошибка сети: не удалось подключиться к Bitcoin API. Проверьте подключение к интернету.';
+        } else if (error.message.includes('Не удалось получить')) {
+            errorMessage = error.message;
+        } else {
+            errorMessage = 'Ошибка: ' + error.message;
+        }
+        showError(errorMessage);
     } finally {
         // Вычисляем оставшееся время для показа лоадера минимум 5 секунд
         const elapsedTime = Date.now() - startTime;
@@ -140,11 +145,7 @@ async function conductDraw() {
         
         // Ждем оставшееся время перед скрытием лоадера
         setTimeout(() => {
-            // Плавное исчезновение лоадера
-            loadingEl.style.opacity = '0';
-            setTimeout(() => {
-                loadingEl.classList.add('hidden');
-            }, 300);
+            loadingEl.classList.add('hidden');
         }, remainingTime);
     }
 }
