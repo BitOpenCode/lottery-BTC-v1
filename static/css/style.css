@@ -75,6 +75,7 @@ header h1 {
     height: 1em;
     background: linear-gradient(#faa504, #141001);
     margin: 0;
+    margin-right: auto;
     position: relative;
     animation: rotate_4001510 7s infinite linear;
     transform-style: preserve-3d;
