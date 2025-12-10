@@ -85,7 +85,7 @@ header h1 {
     font-weight: 700;
     color: var(--tg-theme-text-color);
     margin: 0;
-    margin-left: 20px;
+    margin-left: 40px; /* Увеличен сдвиг вправо */
     line-height: 1.2;
 }
 
@@ -224,7 +224,7 @@ header h1 {
 
 .tab-btn {
     flex: 1;
-    padding: 10px 16px;
+    padding: 12px 16px;
     border: none;
     background: transparent;
     color: var(--tg-theme-hint-color);
@@ -233,6 +233,13 @@ header h1 {
     font-weight: 500;
     border-radius: 8px;
     transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    min-height: 44px; /* Минимальная высота для удобного нажатия на мобильных */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tab-btn.active {
@@ -526,6 +533,486 @@ header h1 {
 .btn-secondary {
     background-color: var(--tg-theme-secondary-bg-color);
     color: var(--tg-theme-text-color);
+}
+
+/* Переключатель режимов */
+.mode-switcher {
+    display: flex !important;
+    gap: 12px;
+    margin: 24px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.mode-btn {
+    --white: #ffe7ff;
+    --bg: #1a1a1a;
+    --radius: 100px;
+    outline: none !important;
+    cursor: pointer !important;
+    border: 0 !important;
+    position: relative !important;
+    border-radius: var(--radius) !important;
+    background-color: var(--bg) !important;
+    transition: all 0.2s ease !important;
+    box-shadow: inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.2), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3), 0 2rem 2rem rgba(0, 0, 0, 0.4), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.9) !important;
+    padding: 0 !important;
+    flex: 1 !important;
+    min-width: 140px !important;
+    max-width: 200px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.mode-btn .wrap {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    padding: 14px 20px !important;
+    border-radius: inherit !important;
+    position: relative !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.mode-btn .wrap p {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    transition: all 0.2s ease !important;
+    transform: translateY(2%) !important;
+    mask-image: linear-gradient(to bottom, white 40%, transparent) !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.mode-btn .wrap p span {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.mode-btn .wrap p span:nth-child(2) {
+    display: none;
+}
+
+.mode-btn:hover .wrap p span:nth-child(1) {
+    display: none;
+}
+
+.mode-btn:hover .wrap p span:nth-child(2) {
+    display: inline-block;
+}
+
+.mode-btn .wrap::before,
+.mode-btn .wrap::after {
+    content: "" !important;
+    position: absolute !important;
+    transition: all 0.3s ease !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+.mode-btn .wrap::before {
+    left: -15%;
+    right: -15%;
+    bottom: 25%;
+    top: -100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.mode-btn .wrap::after {
+    left: 6%;
+    right: 6%;
+    top: 12%;
+    bottom: 40%;
+    border-radius: 22px 22px 0 0;
+    box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.9);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+
+.mode-btn:hover {
+    box-shadow: inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.3), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.5), 0 2rem 2rem rgba(0, 0, 0, 0.4), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.9);
+}
+
+.mode-btn:hover .wrap::before {
+    transform: translateY(-5%);
+}
+
+.mode-btn:hover .wrap::after {
+    opacity: 0.5;
+    transform: translateY(5%);
+}
+
+.mode-btn:hover .wrap p {
+    transform: translateY(-4%);
+}
+
+.mode-btn:hover .wrap {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.mode-btn:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.4), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.9), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.3), 0 2rem 2rem rgba(0, 0, 0, 0.4), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.9);
+}
+
+.mode-btn.active {
+    background-color: var(--bg) !important;
+    background: linear-gradient(135deg, rgba(92, 103, 255, 0.4), rgba(173, 81, 255, 0.3)) !important;
+    box-shadow: inset 0 0.3rem 0.9rem rgba(92, 103, 255, 0.3), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(92, 103, 255, 0.2), 0 2rem 2rem rgba(92, 103, 255, 0.2), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.9) !important;
+}
+
+.mode-btn.active .wrap {
+    color: rgba(255, 255, 255, 1) !important;
+    font-weight: 700 !important;
+}
+
+.mode-btn.active .wrap::before {
+    background-color: rgba(92, 103, 255, 0.2) !important;
+}
+
+.mode-btn.active .wrap::after {
+    background: linear-gradient(
+        180deg,
+        rgba(92, 103, 255, 0.4) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0) 100%
+    ) !important;
+}
+
+.mode-section {
+    width: 100%;
+}
+
+.mode-section.hidden {
+    display: none !important;
+}
+
+/* Симуляция ивента */
+.simulation-section {
+    margin-top: 24px;
+}
+
+.simulation-info {
+    margin-bottom: 20px;
+    padding: 16px;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
+}
+
+.simulation-info p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.slots-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #5c67ff, #ad51ff);
+    transition: width 0.3s ease;
+    border-radius: 12px;
+}
+
+#slotsCount {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    min-width: 60px;
+    text-align: right;
+}
+
+.players-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-name {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.player-tickets-count {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.tickets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* Карточка билета (From Uiverse.io by kennyotsu) */
+.ticket-card-container {
+    position: relative;
+    width: 140px;
+    height: 180px;
+    transition: 200ms;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.ticket-card-container.selected {
+    transform: scale(0.95);
+}
+
+.ticket-card-container.selected .ticket-card,
+.ticket-card-container.selected #ticket-card {
+    border: 3px solid #5c67ff;
+    box-shadow: 0 0 20px rgba(92, 103, 255, 0.8);
+}
+
+.ticket-card-container:active {
+    width: 130px;
+    height: 170px;
+}
+
+.ticket-card-canvas {
+    perspective: 800px;
+    inset: 0;
+    z-index: 200;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas: "tr-1 tr-2 tr-3 tr-4 tr-5"
+        "tr-6 tr-7 tr-8 tr-9 tr-10"
+        "tr-11 tr-12 tr-13 tr-14 tr-15"
+        "tr-16 tr-17 tr-18 tr-19 tr-20"
+        "tr-21 tr-22 tr-23 tr-24 tr-25";
+}
+
+.ticket-card,
+#ticket-card {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    transition: 700ms;
+    background: linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%) !important;
+    width: 100% !important;
+    height: 100% !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.ticket-card-subtitle {
+    transform: translateY(110px);
+    color: rgb(134, 110, 221);
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.ticket-card-title {
+    opacity: 1 !important; /* Номера видны всегда */
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    z-index: 10;
+}
+
+.ticket-card-tracker:hover ~ .ticket-card .ticket-card-title,
+.ticket-card-tracker:hover ~ #ticket-card .ticket-card-title {
+    opacity: 1;
+}
+
+.ticket-prompt,
+#ticket-prompt {
+    bottom: 8px;
+    left: 12px;
+    z-index: 20;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 300ms ease-in-out;
+    position: absolute;
+    max-width: 80px;
+    color: rgb(255, 255, 255);
+}
+
+.ticket-card-tracker {
+    position: absolute;
+    z-index: 200;
+    width: 100%;
+    height: 100%;
+}
+
+.ticket-card-tracker:hover {
+    cursor: pointer;
+}
+
+.ticket-card-tracker:hover ~ .ticket-card .ticket-prompt,
+.ticket-card-tracker:hover ~ #ticket-card #ticket-prompt {
+    opacity: 0;
+}
+
+.ticket-card-tracker:hover ~ .ticket-card,
+.ticket-card-tracker:hover ~ #ticket-card {
+    transition: 300ms;
+    filter: brightness(1.1);
+}
+
+.ticket-card-container:hover .ticket-card::before,
+.ticket-card-container:hover #ticket-card::before {
+    transition: 200ms;
+    content: '';
+    opacity: 80%;
+}
+
+.ticket-card::before,
+#ticket-card::before {
+    content: '';
+    background: linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%);
+    filter: blur(2rem);
+    opacity: 30%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    transition: 200ms;
+}
+
+/* Grid areas для трекеров */
+.tr-1 { grid-area: tr-1; }
+.tr-2 { grid-area: tr-2; }
+.tr-3 { grid-area: tr-3; }
+.tr-4 { grid-area: tr-4; }
+.tr-5 { grid-area: tr-5; }
+.tr-6 { grid-area: tr-6; }
+.tr-7 { grid-area: tr-7; }
+.tr-8 { grid-area: tr-8; }
+.tr-9 { grid-area: tr-9; }
+.tr-10 { grid-area: tr-10; }
+.tr-11 { grid-area: tr-11; }
+.tr-12 { grid-area: tr-12; }
+.tr-13 { grid-area: tr-13; }
+.tr-14 { grid-area: tr-14; }
+.tr-15 { grid-area: tr-15; }
+.tr-16 { grid-area: tr-16; }
+.tr-17 { grid-area: tr-17; }
+.tr-18 { grid-area: tr-18; }
+.tr-19 { grid-area: tr-19; }
+.tr-20 { grid-area: tr-20; }
+.tr-21 { grid-area: tr-21; }
+.tr-22 { grid-area: tr-22; }
+.tr-23 { grid-area: tr-23; }
+.tr-24 { grid-area: tr-24; }
+.tr-25 { grid-area: tr-25; }
+
+/* 3D трансформации для карточек */
+.tr-1:hover ~ .ticket-card,
+.tr-1:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(20deg) rotateY(-10deg) rotateZ(0deg); }
+.tr-2:hover ~ .ticket-card,
+.tr-2:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(20deg) rotateY(-5deg) rotateZ(0deg); }
+.tr-3:hover ~ .ticket-card,
+.tr-3:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(20deg) rotateY(0deg) rotateZ(0deg); }
+.tr-4:hover ~ .ticket-card,
+.tr-4:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(20deg) rotateY(5deg) rotateZ(0deg); }
+.tr-5:hover ~ .ticket-card,
+.tr-5:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg); }
+.tr-6:hover ~ .ticket-card,
+.tr-6:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg); }
+.tr-7:hover ~ .ticket-card,
+.tr-7:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg); }
+.tr-8:hover ~ .ticket-card,
+.tr-8:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg); }
+.tr-9:hover ~ .ticket-card,
+.tr-9:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(10deg) rotateY(5deg) rotateZ(0deg); }
+.tr-10:hover ~ .ticket-card,
+.tr-10:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(10deg) rotateY(10deg) rotateZ(0deg); }
+.tr-11:hover ~ .ticket-card,
+.tr-11:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(0deg) rotateY(-10deg) rotateZ(0deg); }
+.tr-12:hover ~ .ticket-card,
+.tr-12:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(0deg) rotateY(-5deg) rotateZ(0deg); }
+.tr-13:hover ~ .ticket-card,
+.tr-13:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+.tr-14:hover ~ .ticket-card,
+.tr-14:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(0deg) rotateY(5deg) rotateZ(0deg); }
+.tr-15:hover ~ .ticket-card,
+.tr-15:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(0deg) rotateY(10deg) rotateZ(0deg); }
+.tr-16:hover ~ .ticket-card,
+.tr-16:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-10deg) rotateY(-10deg) rotateZ(0deg); }
+.tr-17:hover ~ .ticket-card,
+.tr-17:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-10deg) rotateY(-5deg) rotateZ(0deg); }
+.tr-18:hover ~ .ticket-card,
+.tr-18:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg); }
+.tr-19:hover ~ .ticket-card,
+.tr-19:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-10deg) rotateY(5deg) rotateZ(0deg); }
+.tr-20:hover ~ .ticket-card,
+.tr-20:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-10deg) rotateY(10deg) rotateZ(0deg); }
+.tr-21:hover ~ .ticket-card,
+.tr-21:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-20deg) rotateY(-10deg) rotateZ(0deg); }
+.tr-22:hover ~ .ticket-card,
+.tr-22:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-20deg) rotateY(-5deg) rotateZ(0deg); }
+.tr-23:hover ~ .ticket-card,
+.tr-23:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg); }
+.tr-24:hover ~ .ticket-card,
+.tr-24:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-20deg) rotateY(5deg) rotateZ(0deg); }
+.tr-25:hover ~ .ticket-card,
+.tr-25:hover ~ #ticket-card { transition: 125ms ease-in-out; transform: rotateX(-20deg) rotateY(10deg) rotateZ(0deg); }
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Loading */
@@ -1725,4 +2212,123 @@ header h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+
+.current-player-section {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.current-player-section h3 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.player-balance {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.player-info.active-player {
+    border: 2px solid rgba(92, 103, 255, 0.5);
+    border-radius: 12px;
+    padding: 8px;
+    background: rgba(92, 103, 255, 0.1);
+}
+
+.selected-slots-section {
+    margin-top: 32px;
+    padding: 16px;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
+}
+
+.slot-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 8px;
+}
+
+.slot-title {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.slot-count {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.selected-slots-section h3 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.selected-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 8px;
+    min-height: 100px;
+}
+
+.selected-slot {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    background: linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%);
+}
+
+.selected-slot.slot-player {
+    border: 2px solid #5c67ff;
+    box-shadow: 0 0 10px rgba(92, 103, 255, 0.5);
+}
+
+.selected-slot.slot-bot1 {
+    border: 2px solid #ff6b6b;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+.selected-slot.slot-bot2 {
+    border: 2px solid #4ecdc4;
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+}
+
+/* Выбранные карточки в симуляции */
+.ticket-card-container.ticket-selected {
+    opacity: 0.7 !important;
+    pointer-events: none !important;
+    filter: grayscale(0.3);
+}
+
+.ticket-card-container.ticket-selected .ticket-card,
+.ticket-card-container.ticket-selected #ticket-card {
+    border: 2px solid #00ffaa !important;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.5) !important;
+}
+
+.ticket-card-container.ticket-selected .ticket-prompt {
+    color: #00ffaa !important;
+    font-weight: 700 !important;
 }

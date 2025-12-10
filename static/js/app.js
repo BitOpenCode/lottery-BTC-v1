@@ -43,10 +43,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // Массовый ввод
     document.getElementById('parseBulkTicketsBtn').addEventListener('click', parseBulkTickets);
     
-    // Переключение методов ввода
+    // Переключение методов ввода (поддержка touch для мобильных)
     document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchInputMethod(btn.dataset.method));
+        let touchStartTime = 0;
+        let touchStartPos = { x: 0, y: 0 };
+        
+        // Обработка touchstart для отслеживания начала касания
+        btn.addEventListener('touchstart', (e) => {
+            touchStartTime = Date.now();
+            const touch = e.touches[0];
+            touchStartPos.x = touch.clientX;
+            touchStartPos.y = touch.clientY;
+        }, { passive: true });
+        
+        // Обработка touchend для определения клика
+        btn.addEventListener('touchend', (e) => {
+            const touchEndTime = Date.now();
+            const touch = e.changedTouches[0];
+            const touchEndPos = { x: touch.clientX, y: touch.clientY };
+            
+            // Проверяем, что это был короткий тап (не свайп)
+            const timeDiff = touchEndTime - touchStartTime;
+            const distance = Math.sqrt(
+                Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
+                Math.pow(touchEndPos.y - touchStartPos.y, 2)
+            );
+            
+            if (timeDiff < 300 && distance < 10) {
+                e.preventDefault();
+                e.stopPropagation();
+                switchInputMethod(btn.dataset.method);
+            }
+        });
+        
+        // Обработка клика для десктопов
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            switchInputMethod(btn.dataset.method);
+        });
     });
+    
+    // Переключение режимов
+    document.getElementById('normalModeBtn').addEventListener('click', () => switchMode('normal'));
+    document.getElementById('simulationModeBtn').addEventListener('click', () => switchMode('simulation'));
+    
+    // Инициализация симуляции
+    initSimulation();
     
     // Очистка всех билетов
     document.getElementById('clearAllCurrentBtn').addEventListener('click', clearAllCurrentTickets);
@@ -227,6 +270,8 @@ function parseBulkTickets() {
 
 // Переключение метода ввода
 function switchInputMethod(method) {
+    console.log('Переключение метода ввода на:', method); // Для отладки
+    
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -234,8 +279,28 @@ function switchInputMethod(method) {
         methodEl.classList.remove('active');
     });
     
-    document.querySelector(`[data-method="${method}"]`).classList.add('active');
-    document.getElementById(`${method}InputMethod`).classList.add('active');
+    const activeBtn = document.querySelector(`[data-method="${method}"]`);
+    const activeMethod = document.getElementById(`${method}InputMethod`);
+    
+    if (activeBtn) {
+        activeBtn.classList.add('active');
+    }
+    if (activeMethod) {
+        activeMethod.classList.add('active');
+    }
+    
+    // Фокус на поле ввода для удобства
+    if (method === 'single') {
+        const singleInput = document.getElementById('singleTicketInput');
+        if (singleInput) {
+            setTimeout(() => singleInput.focus(), 100);
+        }
+    } else if (method === 'bulk') {
+        const bulkInput = document.getElementById('bulkTicketsInput');
+        if (bulkInput) {
+            setTimeout(() => bulkInput.focus(), 100);
+        }
+    }
 }
 
 // Обновление отображения билетов

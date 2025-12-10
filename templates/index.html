@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=4">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=6">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -53,6 +53,30 @@
             </div>
         </div>
 
+                <!-- Переключатель режимов -->
+                <div class="mode-switcher">
+                    <button id="normalModeBtn" class="mode-btn active" data-mode="normal">
+                        <div class="wrap">
+                            <p>
+                                <span>✧</span>
+                                <span>✦</span>
+                                Обычный режим
+                            </p>
+                        </div>
+                    </button>
+                    <button id="simulationModeBtn" class="mode-btn" data-mode="simulation">
+                        <div class="wrap">
+                            <p>
+                                <span>✧</span>
+                                <span>✦</span>
+                                Симуляция ивента
+                            </p>
+                        </div>
+                    </button>
+                </div>
+
+        <!-- Обычный режим -->
+        <div id="normalMode" class="mode-section">
         <div class="tickets-input-section">
             <h2>🎫 Введите номера билетов</h2>
             <div class="tickets-input-container">
@@ -87,6 +111,58 @@
 
         <div class="controls">
             <button id="drawBtn" class="btn btn-primary" disabled>🎲 Провести розыгрыш</button>
+        </div>
+        </div>
+
+        <!-- Режим симуляции -->
+        <div id="simulationMode" class="mode-section hidden">
+            <div class="simulation-section">
+                <h2>🎮 Симуляция ивента</h2>
+                <div class="simulation-info">
+                    <p>Выберите карточки. Боты тоже выбирают. Всего нужно заполнить <strong id="totalSlots">33</strong> слота.</p>
+                    <div class="slots-progress">
+                        <div class="progress-bar">
+                            <div id="slotsProgress" class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <span id="slotsCount">0 / 33</span>
+                    </div>
+                </div>
+                
+                <div class="players-info">
+                    <div class="player-info active-player" id="playerInfo">
+                        <span class="player-name">Вы</span>
+                        <span class="player-balance">Баланс: <span id="playerBalance">11</span></span>
+                        <span class="player-tickets-count" id="playerTicketsCount">0</span>
+                    </div>
+                    <div class="player-info" id="bot1Info">
+                        <span class="player-name">Бот 1</span>
+                        <span class="player-balance">Баланс: <span id="bot1Balance">11</span></span>
+                        <span class="player-tickets-count" id="bot1TicketsCount">0</span>
+                    </div>
+                    <div class="player-info" id="bot2Info">
+                        <span class="player-name">Бот 2</span>
+                        <span class="player-balance">Баланс: <span id="bot2Balance">11</span></span>
+                        <span class="player-tickets-count" id="bot2TicketsCount">0</span>
+                    </div>
+                </div>
+
+                <div class="current-player-section">
+                    <h3 id="currentPlayerTitle">Ваши карточки</h3>
+                    <div class="tickets-grid" id="ticketsGrid">
+                        <!-- Карточки текущего игрока будут добавлены через JavaScript -->
+                    </div>
+                </div>
+
+                <div class="selected-slots-section">
+                    <div class="slot-header">
+                        <h3 class="slot-title">Cloud Contract 40 TH</h3>
+                        <div class="slot-count">(<span id="selectedSlotsCount">0</span> / 33)</div>
+                    </div>
+                    <div class="selected-slots-grid" id="selectedSlotsGrid">
+                        <!-- Выбранные карточки будут отображаться здесь -->
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="ticketsManagement" class="tickets-management hidden" style="display: none;">
@@ -334,6 +410,7 @@
 
     <script src="{{ url_for('static', filename='js/lottery-client.js') }}"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/simulation.js') }}"></script>
 </body>
 </html>
 
