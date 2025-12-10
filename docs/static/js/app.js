@@ -1,4 +1,4 @@
-// BTC Lottery Frontend JavaScript
+// Hash Hunters Frontend JavaScript
 
 const API_BASE = '';
 

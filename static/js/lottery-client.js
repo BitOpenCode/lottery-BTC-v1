@@ -1,4 +1,4 @@
-// BTC Lottery Client-Side Logic
+// Hash Hunters Client-Side Logic
 // Вся логика работает в браузере без бэкенда
 
 /**
