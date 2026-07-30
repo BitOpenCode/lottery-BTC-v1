@@ -1,5 +1,7 @@
 # BTC Lottery
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-vercel-green)](https://lottery-btc-v1.vercel.app/)
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![Flask](https://img.shields.io/badge/flask-3.0.0-green.svg)
