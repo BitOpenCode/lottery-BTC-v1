@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>BTC Lottery</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=8">
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loading-spinner">
+        <div style="text-align:center;">
+            <div class="spinner"></div>
+            <p class="spinner-text">Loading...</p>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            const spinner = document.getElementById('loading-spinner');
+            if (spinner) {
+                spinner.classList.add('hidden');
+                setTimeout(function() {
+                    spinner.style.display = 'none';
+                }, 500);
+            }
+        });
+        setTimeout(function() {
+            const spinner = document.getElementById('loading-spinner');
+            if (spinner && !spinner.classList.contains('hidden')) {
+                spinner.classList.add('hidden');
+                setTimeout(function() { spinner.style.display = 'none'; }, 500);
+            }
+        }, 5000);
+    </script>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>₿TC Lottery</h1>
+            <p class="subtitle">Fair lottery based on Bitcoin blocks</p>
+        </header>
+
+        <!-- How it works -->
+        <div class="card">
+            <h2 class="card-title">How it works</h2>
+            <p style="color:var(--text-secondary);">
+                The winner is determined by Bitcoin block hashes. Each ticket gets a unique score. 
+                <strong style="color:var(--accent);">Minimum score wins.</strong>
+            </p>
+            <p style="color:var(--text-muted);font-size:var(--font-size-sm);margin-top:var(--spacing-sm);">
+                Fully transparent and verifiable.
+            </p>
+        </div>
+
+        <!-- Mode Switcher -->
+        <div class="mode-switcher">
+            <button id="normalModeBtn" class="mode-btn active" data-mode="normal">Normal</button>
+            <button id="simulationModeBtn" class="mode-btn" data-mode="simulation">Simulation</button>
+        </div>
+
+        <!-- Normal Mode -->
+        <div id="normalMode" class="mode-section">
+            <div class="card">
+                <h2 class="card-title">Enter ticket numbers</h2>
+                
+                <div class="method-tabs">
+                    <button class="tab-btn active" data-method="single">Single</button>
+                    <button class="tab-btn" data-method="bulk">Bulk</button>
+                </div>
+                
+                <!-- Single input -->
+                <div id="singleInputMethod" class="input-method active">
+                    <div class="form-group">
+                        <input type="number" id="singleTicketInput" placeholder="Ticket number" class="form-input">
+                        <button id="addSingleTicketBtn" class="btn btn-success">Add</button>
+                    </div>
+                    <div id="singleTicketsList" class="tickets-grid"></div>
+                </div>
+                
+                <!-- Bulk input -->
+                <div id="bulkInputMethod" class="input-method">
+                    <textarea id="bulkTicketsInput" placeholder="Enter ticket numbers separated by comma or new line&#10;Example: 666, 77, 123, 1, 6, 1234" class="form-input"></textarea>
+                    <button id="parseBulkTicketsBtn" class="btn btn-secondary btn-block" style="margin-top:var(--spacing-sm);">Parse numbers</button>
+                    <div id="bulkTicketsList" class="tickets-grid mt-sm"></div>
+                </div>
+                
+                <hr style="border-color:var(--border-color);margin:var(--spacing-md) 0;">
+                
+                <div class="flex-between">
+                    <span class="text-muted">Current tickets: <strong id="currentTicketsCount">0</strong></span>
+                    <button id="clearAllCurrentBtn" class="btn btn-danger btn-sm">Clear all</button>
+                </div>
+                <div id="currentTicketsDisplay" class="tickets-grid mt-sm"></div>
+            </div>
+
+            <button id="drawBtn" class="btn btn-primary btn-block btn-lg" disabled>Draw</button>
+        </div>
+
+        <!-- Simulation Mode -->
+        <div id="simulationMode" class="mode-section hidden">
+            <div class="card">
+                <h2 class="card-title">Event Simulation</h2>
+                <p class="text-muted">Select cards. Bots also choose. Total <strong id="totalSlots">33</strong> slots.</p>
+                
+                <div class="flex-between mt-md">
+                    <span>Progress</span>
+                    <span id="slotsCount">0 / 33</span>
+                </div>
+                <div style="background:var(--bg-secondary);border-radius:var(--radius-full);height:8px;overflow:hidden;margin-top:var(--spacing-xs);">
+                    <div id="slotsProgress" style="width:0%;height:100%;background:var(--accent);border-radius:var(--radius-full);transition:width 0.3s;"></div>
+                </div>
+                
+                <div class="grid grid-3 mt-md">
+                    <div class="player-info" id="playerInfo">
+                        <div style="font-weight:600;">You</div>
+                        <div class="text-muted" style="font-size:var(--font-size-sm);">Balance: <span id="playerBalance">11</span></div>
+                        <div class="badge badge-accent" id="playerTicketsCount">0</div>
+                    </div>
+                    <div class="player-info" id="bot1Info">
+                        <div style="font-weight:600;">Bot 1</div>
+                        <div class="text-muted" style="font-size:var(--font-size-sm);">Balance: <span id="bot1Balance">11</span></div>
+                        <div class="badge badge-secondary" id="bot1TicketsCount">0</div>
+                    </div>
+                    <div class="player-info" id="bot2Info">
+                        <div style="font-weight:600;">Bot 2</div>
+                        <div class="text-muted" style="font-size:var(--font-size-sm);">Balance: <span id="bot2Balance">11</span></div>
+                        <div class="badge badge-secondary" id="bot2TicketsCount">0</div>
+                    </div>
+                </div>
+                
+                <div class="mt-md">
+                    <h3 id="currentPlayerTitle" style="font-size:var(--font-size-md);">Available cards</h3>
+                    <div class="tickets-grid" id="ticketsGrid"></div>
+                </div>
+                
+                <div class="mt-md">
+                    <div class="flex-between">
+                        <h3 style="font-size:var(--font-size-md);">Cards</h3>
+                        <span class="text-muted">(<span id="selectedSlotsCount">0</span> / 33)</span>
+                    </div>
+                    <div class="tickets-grid" id="selectedSlotsGrid"></div>
+                </div>
+            </div>
+
+            <!-- Simulation Controls -->
+            <button id="runSimulationBtn" class="btn btn-primary btn-block btn-lg">Run Simulation</button>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="hidden">
+            <div class="card" style="border-color:var(--accent);">
+                <h2 class="card-title text-center">Results</h2>
+                
+                <div class="winner-display" id="winnerDisplay">#--</div>
+                
+                <div class="result-card">
+                    <div class="flex-between">
+                        <span class="text-muted">Seed</span>
+                        <span class="seed-display" id="seedDisplay" style="margin:0;font-size:var(--font-size-xs);">-</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h3 style="font-size:var(--font-size-md);">Blocks</h3>
+                    <div id="blockHashes" style="font-family:monospace;font-size:var(--font-size-xs);color:var(--text-secondary);word-break:break-all;"></div>
+                </div>
+                
+                <div class="result-card">
+                    <h3 style="font-size:var(--font-size-md);">Scores</h3>
+                    <div id="ticketsList" class="score-list"></div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="flex-between">
+                        <h3 style="font-size:var(--font-size-md);">Verification Data</h3>
+                        <button id="copyProofBtn" class="btn btn-secondary btn-sm">Copy</button>
+                    </div>
+                    <pre id="proofData" style="background:var(--bg-secondary);padding:var(--spacing-md);border-radius:var(--radius-sm);overflow-x:auto;font-size:var(--font-size-xs);color:var(--text-secondary);margin-top:var(--spacing-sm);"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div id="error" class="hidden" style="color:var(--error);padding:var(--spacing-md);border:1px solid var(--error);border-radius:var(--radius-md);margin-top:var(--spacing-md);"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/lottery-client.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/simulation.js') }}"></script>
+</body>
+</html>
